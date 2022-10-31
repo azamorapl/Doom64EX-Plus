@@ -219,6 +219,13 @@ dboolean P_CheckMissileRange(mobj_t* actor) {
 
     dist >>= 16;
 
+    if (actor->type == MT_UNDEAD)
+    {
+        if (dist < 196)
+            return false;	// close for fist attack
+        dist >>= 1;
+    }
+
     if(actor->type == MT_SKULL) {
         dist >>= 1;
     }
@@ -846,6 +853,63 @@ void A_FaceTarget(mobj_t* actor) {
         rnd1 = P_Random();
         rnd2 = P_Random();
         actor->angle += (rnd2 - rnd1) << 21;
+    }
+}
+
+//
+// A_SkelMissile
+//
+void A_SkelMissile(mobj_t* actor)
+{
+    mobj_t* mo;
+
+    mo = NULL; //ATSB useless initialiser
+
+    if (!actor->target)
+        return;
+
+    A_FaceTarget(actor);
+    actor->z += 16 * FRACUNIT;	// so missile spawns higher
+    mo = P_SpawnMissile(actor, actor->target, MT_PROJ_TRACER,
+        FixedMul(mo->radius, dcos(mo->angle)),
+        FixedMul(mo->radius, dsin(mo->angle)),
+        (mo->height << 1) / FRACUNIT, true);
+
+    actor->z -= 16 * FRACUNIT;	// back to normal
+
+    mo->x += mo->momx;
+    mo->y += mo->momy;
+    mo->tracer = actor->target;
+}
+
+//
+// A_SkelWhoosh
+//
+void A_SkelWhoosh(mobj_t* actor)
+{
+    if (!actor->target)
+        return;
+    A_FaceTarget(actor);
+    S_StartSound(actor, sfx_skeswg);
+}
+
+//
+// A_SkelFist
+//
+void A_SkelFist(mobj_t* actor)
+{
+    int		damage;
+
+    if (!actor->target)
+        return;
+
+    A_FaceTarget(actor);
+
+    if (P_CheckMeleeRange(actor))
+    {
+        damage = ((P_Random() % 10) + 1) * 6;
+        S_StartSound(actor, sfx_skepch);
+        P_DamageMobj(actor->target, actor, actor, damage);
     }
 }
 

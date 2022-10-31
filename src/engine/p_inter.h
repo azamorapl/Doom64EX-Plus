@@ -33,6 +33,4 @@
 dboolean P_GivePower(player_t*, int);
 dboolean P_GiveWeapon(player_t* player, mobj_t *item, weapontype_t weapon, dboolean dropped);
 
-
-
 #endif

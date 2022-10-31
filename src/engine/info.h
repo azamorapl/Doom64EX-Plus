@@ -36,6 +36,7 @@ typedef enum {
     SPR_POSS,
     SPR_TROO,
     SPR_HEAD,
+    SPR_SKEL, // ATSB REV
     SPR_BOSS,
     SPR_SKUL,
     SPR_BSPI,
@@ -608,6 +609,42 @@ typedef enum {
     S_APLS_DIE4,
     S_APLS_DIE5,
     S_APLS_DIE6,
+    S_SKEL_STND,
+    S_SKEL_STND2,
+    S_SKEL_RUN1,
+    S_SKEL_RUN2,
+    S_SKEL_RUN3,
+    S_SKEL_RUN4,
+    S_SKEL_RUN5,
+    S_SKEL_RUN6,
+    S_SKEL_RUN7,
+    S_SKEL_RUN8,
+    S_SKEL_RUN9,
+    S_SKEL_RUN10,
+    S_SKEL_RUN11,
+    S_SKEL_RUN12,
+    S_SKEL_FIST1,
+    S_SKEL_FIST2,
+    S_SKEL_FIST3,
+    S_SKEL_FIST4,
+    S_SKEL_MISS1,
+    S_SKEL_MISS2,
+    S_SKEL_MISS3,
+    S_SKEL_MISS4,
+    S_SKEL_PAIN,
+    S_SKEL_PAIN2,
+    S_SKEL_DIE1,
+    S_SKEL_DIE2,
+    S_SKEL_DIE3,
+    S_SKEL_DIE4,
+    S_SKEL_DIE5,
+    S_SKEL_DIE6,
+    S_SKEL_RAISE1,
+    S_SKEL_RAISE2,
+    S_SKEL_RAISE3,
+    S_SKEL_RAISE4,
+    S_SKEL_RAISE5,
+    S_SKEL_RAISE6,
     S_MANF1,
     S_MANF2,
     S_MANF3,
@@ -1101,6 +1138,7 @@ typedef enum {
     MT_GIB_HANGWHITEMEAT,    // 128
     MT_GIB_HANGHEAD,        // 129
     MT_GIB_HANGRIB,            // 130
+    MT_UNDEAD,              // 131
     NUMMOBJTYPES
 } mobjtype_t;
 

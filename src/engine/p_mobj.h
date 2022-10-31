@@ -258,4 +258,11 @@ typedef struct mobj_s {
 
 } mobj_t;
 
+//
+// D2 MOBS
+//
+void A_SkelMissile(mobj_t* actor);
+void A_SkelWhoosh(mobj_t* actor);
+void A_SkelFist(mobj_t* actor);
+
 #endif

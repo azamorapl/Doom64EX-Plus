@@ -122,6 +122,14 @@ typedef enum {
     sfx_rectdie,    //rectdie
     sfx_rectpain,   //rectpain
     sfx_rectsit,    //rectsit
+    sfx_skeswg,     //revenant whoosh
+    sfx_skepch,     //revenant punch
+    sfx_skesit,     //revenant I SEE YOU!
+    sfx_popain,     //pain sound
+    sfx_skedth,     //revenant death sound
+    sfx_skeact,     //revenant active sound
+    sfx_skeatk,     //reveant tracer see
+    sfx_barexp,     //tracer death
     mus_amb01,
     mus_amb02,
     mus_amb03,

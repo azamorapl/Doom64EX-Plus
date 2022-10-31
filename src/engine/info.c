@@ -56,7 +56,7 @@ char *sprnames[NUMSPRITES+1] = {  //0x5FA30
     "A001", "A012", "A010", "A018", "A017", "A026", "A022", "A028",
     "A029", "A035", "A036", "TRE3", "TRE2", "TRE1", "A013", "A019",
     "A004", "A005", "A023", "SAWG", "PUNG", "PISG", "SHT1", "SHT2",
-    "CHGG", "ROCK", "PLAS", "BFGG", "LASR", "RBLD", "GBLD", NULL
+    "CHGG", "ROCK", "PLAS", "BFGG", "LASR", "RBLD", "GBLD", "SKEL", NULL
 };
 
 
@@ -95,6 +95,9 @@ void A_PosAttack();
 void A_Scream();
 void A_SPosAttack();
 void A_Tracer();
+void A_SkelWhoosh();  // ATSB: REV
+void A_SkelFist();    // ATSB: REV
+void A_SkelMissile(); // ATSB: REV
 void A_FatRaise();
 void A_FatAttack1();
 void A_FatAttack2();
@@ -210,6 +213,43 @@ state_t states[NUMSTATES] = {      //0x4DFF4
     /*S_SARG_ATK0*/         { SPR_SARG, 4, 1, {A_FadeOut}, S_SARG_ATK1 },
     /*S_SARG_PAIN0*/        { SPR_SARG, 7, 1, {A_FadeOut}, S_SARG_PAIN1 },
     /*S_SARG_DIE0*/         { SPR_SARG, 8, 1, {A_FadeIn}, S_SARG_DIE1 },
+
+    {SPR_SKEL,0,10,{A_Look},S_SKEL_STND2},	// S_SKEL_STND
+    {SPR_SKEL,1,10,{A_Look},S_SKEL_STND},	// S_SKEL_STND2
+    {SPR_SKEL,0,2,{A_Chase},S_SKEL_RUN2},	// S_SKEL_RUN1
+    {SPR_SKEL,0,2,{A_Chase},S_SKEL_RUN3},	// S_SKEL_RUN2
+    {SPR_SKEL,1,2,{A_Chase},S_SKEL_RUN4},	// S_SKEL_RUN3
+    {SPR_SKEL,1,2,{A_Chase},S_SKEL_RUN5},	// S_SKEL_RUN4
+    {SPR_SKEL,2,2,{A_Chase},S_SKEL_RUN6},	// S_SKEL_RUN5
+    {SPR_SKEL,2,2,{A_Chase},S_SKEL_RUN7},	// S_SKEL_RUN6
+    {SPR_SKEL,3,2,{A_Chase},S_SKEL_RUN8},	// S_SKEL_RUN7
+    {SPR_SKEL,3,2,{A_Chase},S_SKEL_RUN9},	// S_SKEL_RUN8
+    {SPR_SKEL,4,2,{A_Chase},S_SKEL_RUN10},	// S_SKEL_RUN9
+    {SPR_SKEL,4,2,{A_Chase},S_SKEL_RUN11},	// S_SKEL_RUN10
+    {SPR_SKEL,5,2,{A_Chase},S_SKEL_RUN12},	// S_SKEL_RUN11
+    {SPR_SKEL,5,2,{A_Chase},S_SKEL_RUN1},	// S_SKEL_RUN12
+    {SPR_SKEL,6,0,{A_FaceTarget},S_SKEL_FIST2},	// S_SKEL_FIST1
+    {SPR_SKEL,6,6,{A_SkelWhoosh},S_SKEL_FIST3},	// S_SKEL_FIST2
+    {SPR_SKEL,7,6,{A_FaceTarget},S_SKEL_FIST4},	// S_SKEL_FIST3
+    {SPR_SKEL,8,6,{A_SkelFist},S_SKEL_RUN1},	// S_SKEL_FIST4
+    {SPR_SKEL,32777,0,{A_FaceTarget},S_SKEL_MISS2},	// S_SKEL_MISS1
+    {SPR_SKEL,32777,10,{A_FaceTarget},S_SKEL_MISS3},	// S_SKEL_MISS2
+    {SPR_SKEL,10,10,{A_SkelMissile},S_SKEL_MISS4},	// S_SKEL_MISS3
+    {SPR_SKEL,10,10,{A_FaceTarget},S_SKEL_RUN1},	// S_SKEL_MISS4
+    {SPR_SKEL,11,5,{NULL},S_SKEL_PAIN2},	// S_SKEL_PAIN
+    {SPR_SKEL,11,5,{A_Pain},S_SKEL_RUN1},	// S_SKEL_PAIN2
+    {SPR_SKEL,11,7,{NULL},S_SKEL_DIE2},	// S_SKEL_DIE1
+    {SPR_SKEL,12,7,{NULL},S_SKEL_DIE3},	// S_SKEL_DIE2
+    {SPR_SKEL,13,7,{A_Scream},S_SKEL_DIE4},	// S_SKEL_DIE3
+    {SPR_SKEL,14,7,{A_Fall},S_SKEL_DIE5},	// S_SKEL_DIE4
+    {SPR_SKEL,15,7,{NULL},S_SKEL_DIE6},	// S_SKEL_DIE5
+    {SPR_SKEL,16,-1,{NULL},S_NULL},	// S_SKEL_DIE6
+    {SPR_SKEL,16,5,{NULL},S_SKEL_RAISE2},	// S_SKEL_RAISE1
+    {SPR_SKEL,15,5,{NULL},S_SKEL_RAISE3},	// S_SKEL_RAISE2
+    {SPR_SKEL,14,5,{NULL},S_SKEL_RAISE4},	// S_SKEL_RAISE3
+    {SPR_SKEL,13,5,{NULL},S_SKEL_RAISE5},	// S_SKEL_RAISE4
+    {SPR_SKEL,12,5,{NULL},S_SKEL_RAISE6},	// S_SKEL_RAISE5
+    {SPR_SKEL,11,5,{NULL},S_SKEL_RUN1},	// S_SKEL_RAISE6
 
     /*S_FATT_STND*/         { SPR_FATT, 0, 15, {A_Look}, S_FATT_STND2 },
     /*S_FATT_STND2*/        { SPR_FATT, 1, 15, {A_Look}, S_FATT_STND },
@@ -1174,6 +1214,32 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {      //0x51E38
         MF_SOLID|MF_SHOOTABLE|MF_GRAVITY|MF_COUNTKILL,        //flags
         1,        //palette
         255        //alpha
+    },
+
+    {	// MT_UNDEAD
+        66,		// doomednum
+        S_SKEL_STND,		// spawnstate
+        300,		// spawnhealth
+        S_SKEL_RUN1,		// seestate
+        sfx_skesit,		// seesound
+        8,		// reactiontime
+        0,		// attacksound
+        S_SKEL_PAIN,		// painstate
+        100,		// painchance
+        sfx_popain,		// painsound
+        S_SKEL_FIST1,		// meleestate
+        S_SKEL_MISS1,		// missilestate
+        S_SKEL_DIE1,		// deathstate
+        S_NULL,		// xdeathstate
+        sfx_skedth,		// deathsound
+        10,		// speed
+        20 * FRACUNIT,		// radius
+        56 * FRACUNIT,		// height
+        500,		// mass
+        0,		// damage
+        sfx_skeact,		// activesound
+        MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,		// flags
+        S_SKEL_RAISE1		// raisestate
     },
 
     {
