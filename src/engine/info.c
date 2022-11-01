@@ -41,9 +41,9 @@
 #include "p_mobj.h"
 
 char *sprnames[NUMSPRITES+1] = {  //0x5FA30
-    "SPOT", "PLAY", "SARG", "FATT", "POSS", "TROO", "HEAD", "BOSS",
-    "SKUL", "BSPI", "CYBR", "PAIN", "RECT", "MISL", "PLSS", "BFS1",
-    "LASS", "BAL1", "BAL3", "BAL2", "BAL7", "BAL8", "APLS", "MANF",
+    "SPOT", "PLAY", "SARG", "SKEL", "FATT", "POSS", "TROO", "HEAD",
+    "BOSS", "SKUL", "BSPI", "CYBR", "PAIN", "RECT", "MISL", "PLSS",
+    "BFS1", "LASS", "BAL1", "BAL3", "BAL2", "BAL7", "BAL8", "APLS", "MANF",
     "TRCR", "DART", "FIRE", "RBAL", "PUF2", "PUF3", "PUFF", "BLUD",
     "A027", "TFOG", "BFE2", "ARM1", "ARM2", "BON1", "BON2", "BKEY",
     "RKEY", "YKEY", "YSKU", "RSKU", "BSKU", "ART1", "ART2", "ART3",
@@ -56,7 +56,7 @@ char *sprnames[NUMSPRITES+1] = {  //0x5FA30
     "A001", "A012", "A010", "A018", "A017", "A026", "A022", "A028",
     "A029", "A035", "A036", "TRE3", "TRE2", "TRE1", "A013", "A019",
     "A004", "A005", "A023", "SAWG", "PUNG", "PISG", "SHT1", "SHT2",
-    "CHGG", "ROCK", "PLAS", "BFGG", "LASR", "RBLD", "GBLD", "SKEL", NULL
+    "CHGG", "ROCK", "PLAS", "BFGG", "LASR", "RBLD", "GBLD", NULL
 };
 
 
