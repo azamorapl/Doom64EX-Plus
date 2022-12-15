@@ -39,7 +39,7 @@
 #ifdef __OpenBSD__
 #include <SDL.h>
 #else
-#include <SDL2/SDL.h> // Gibbon - for *
+#include <SDL3/SDL.h> // Gibbon - for *
 #endif
 
 #define CONSOLE_PROMPTCHAR      '>'

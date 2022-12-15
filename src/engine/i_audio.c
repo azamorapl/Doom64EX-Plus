@@ -40,7 +40,7 @@
 #ifdef __OpenBSD__
 #include <SDL.h>
 #else
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 #endif
 
 #if !defined _WIN32 || __APPLE__ || __arm__ || __aarch64__

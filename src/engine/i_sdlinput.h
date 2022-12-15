@@ -30,7 +30,7 @@
 #ifdef __OpenBSD__
 #include <SDL.h>
 #else
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 #endif
 #include "doomtype.h"
 ////////////Input//////////////
