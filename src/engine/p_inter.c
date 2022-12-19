@@ -435,6 +435,13 @@ void P_TouchSpecialThing(mobj_t* special, mobj_t* toucher) {
 		sound = sfx_powerup;
 		break;
 
+	case SPR_SPED:
+		player->speed = 500;
+		player->message = GOTSUPER;
+		player->messagepic = 5;
+		sound = sfx_powerup;
+		break;
+
 	case SPR_MEGA:
 		player->health = deh_megasphere_health;
 		player->mo->health = player->health;

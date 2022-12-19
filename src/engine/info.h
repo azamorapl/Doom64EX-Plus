@@ -82,6 +82,7 @@ typedef enum {
 	SPR_STIM,
 	SPR_MEDI,
 	SPR_SOUL,
+	SPR_SPED,
 	SPR_PINV,
 	SPR_PSTR,
 	SPR_PINS,
@@ -735,6 +736,12 @@ typedef enum {
 	S_SOUL4,
 	S_SOUL5,
 	S_SOUL6,
+	S_SPEED1,
+	S_SPEED2,
+	S_SPEED3,
+	S_SPEED4,
+	S_SPEED5,
+	S_SPEED6,
 	S_PINV1,
 	S_PINV2,
 	S_PINV3,
@@ -1035,6 +1042,7 @@ typedef enum {
 	MT_ITEM_STIMPACK,        // 60
 	MT_ITEM_MEDKIT,            // 61
 	MT_ITEM_SOULSPHERE,        // 62
+	MT_ITEM_SPEEDSPHERE,        // I don't give a damn what number it is
 	MT_ITEM_INVULSPHERE,    // 63
 	MT_ITEM_BERSERK,        // 64
 	MT_ITEM_INVISSPHERE,    // 65

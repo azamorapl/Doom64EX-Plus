@@ -47,7 +47,7 @@ int8_t* sprnames[NUMSPRITES + 1] = {  //0x5FA30
 	"TRCR", "DART", "FIRE", "RBAL", "PUF2", "PUF3", "PUFF", "BLUD",
 	"A027", "TFOG", "BFE2", "ARM1", "ARM2", "BON1", "BON2", "BKEY",
 	"RKEY", "YKEY", "YSKU", "RSKU", "BSKU", "ART1", "ART2", "ART3",
-	"STIM", "MEDI", "SOUL", "PINV", "PSTR", "PINS", "SUIT", "PMAP",
+	"STIM", "MEDI", "SOUL", "SPED", "PINV", "PSTR", "PINS", "SUIT", "PMAP",
 	"PVIS", "MEGA", "CLIP", "AMMO", "RCKT", "BROK", "CELL", "CELP",
 	"SHEL", "SBOX", "BPAK", "BFUG", "CSAW", "MGUN", "LAUN", "PLSM",
 	"SHOT", "SGN2", "LSRG", "CAND", "BAR1", "LMP1", "LMP2", "A031",
@@ -756,6 +756,13 @@ state_t states[NUMSTATES] = {      //0x4DFF4
 	/*S_SOUL4*/             { SPR_SOUL, 32771, 6, {NULL}, S_SOUL5 },
 	/*S_SOUL5*/             { SPR_SOUL, 32770, 6, {NULL}, S_SOUL6 },
 	/*S_SOUL6*/             { SPR_SOUL, 32769, 6, {NULL}, S_SOUL1 },
+
+	/*S_SPEED1*/			{ SPR_SPED, 32768, 6, {NULL}, S_SPEED2 },
+	/*S_SPEED2*/			{ SPR_SPED, 32769, 6, {NULL}, S_SPEED3 },
+	/*S_SPEED3*/			{ SPR_SPED, 32770, 6, {NULL}, S_SPEED4 },
+	/*S_SPEED4*/			{ SPR_SPED, 32771, 6, {NULL}, S_SPEED5 },
+	/*S_SPEED5*/			{ SPR_SPED, 32770, 6, {NULL}, S_SPEED6 },
+	/*S_SPEED6*/			{ SPR_SPED, 32769, 6, {NULL}, S_SPEED1 },
 
 	/*S_PINV1*/             { SPR_PINV, 32768, 6, {NULL}, S_PINV2 },
 	/*S_PINV2*/             { SPR_PINV, 32769, 6, {NULL}, S_PINV3 },
@@ -2745,6 +2752,34 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {      //0x51E38
 		/*MT_ITEM_SOULSPHERE*/
 		2013,        //doomednum
 		S_SOUL1,        //spawnstate
+		1000,        //spawnhealth
+		S_NULL,        //seestate
+		sfx_None/*sfx_000*/,        //seesound
+		8,        //reactiontime
+		sfx_None/*sfx_000*/,        //attacksound
+		S_NULL,        //painstate
+		0,        //painchance
+		sfx_None/*sfx_000*/,        //painsound
+		S_NULL,        //meleestate
+		S_NULL,        //missilestate
+		S_NULL,        //deathstate
+		S_NULL,        //xdeathstate
+		sfx_None/*sfx_000*/,        //deathsound
+		0,        //speed
+		20 * FRACUNIT,        //radius
+		16 * FRACUNIT,        //height
+		100,        //mass
+		0,        //damage
+		sfx_None/*sfx_000*/,        //activesound
+		MF_SPECIAL | MF_COUNTITEM,        //flags
+		0,        //palette
+		255        //alpha
+	},
+
+	{
+		/*MT_ITEM_SPEEDSPHERE*/
+		9901,        //doomednum
+		S_SPEED1,        //spawnstate
 		1000,        //spawnhealth
 		S_NULL,        //seestate
 		sfx_None/*sfx_000*/,        //seesound

@@ -148,6 +148,8 @@ typedef struct player_s {
 
     // Hint messages.
     int8_t*           message;
+
+    int               speed;
 	
 	// Secret messages.
     int8_t*           secretmessage;
