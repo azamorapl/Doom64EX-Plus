@@ -58,6 +58,8 @@
 #include "w_wad.h"
 #include "w_file.h"
 
+CVAR(m_alpha, 0);
+
 //
 // GLOBALS
 //
@@ -275,7 +277,13 @@ void W_Init(void) {
 	int             p;
 
 	// open the file and add to directory
-	iwad = W_FindIWAD();
+	if (m_alpha.value > 0)
+	{
+		iwad = W_FindIWADAlpha();
+	}
+	else {
+		iwad = W_FindIWAD();
+	}
 
 	if (iwad == NULL) {
 		I_Error("W_Init: IWAD not found");

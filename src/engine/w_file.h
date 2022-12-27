@@ -79,5 +79,6 @@ size_t W_Read(wad_file_t* wad, uint32_t offset,
 int8_t* W_FindWADByName(int8_t* filename);
 int8_t* W_TryFindWADByName(int8_t* filename);
 int8_t* W_FindIWAD(void);
+int8_t* W_FindIWADAlpha(void);
 
 #endif /*__W_FILE__*/

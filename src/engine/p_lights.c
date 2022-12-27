@@ -93,27 +93,30 @@ void P_SpawnFireFlicker(sector_t* sector) {
 // Do flashing lights.
 //
 
+static void T_AccessibilityFakeThinker(void)
+{
+	// beep beep...
+}
+
 void T_LightFlash(lightflash_t* flash) {
-	if (v_accessibility.value < 1)
+	if (--flash->count)
 	{
-		if (--flash->count) {
-			return;
-		}
+		return;
+	}
 
-		if (flash->special != flash->sector->special) {
-			flash->sector->lightlevel = 0;
-			P_RemoveThinker(&flash->thinker);
-			return;
-		}
+	if (flash->special != flash->sector->special) {
+		flash->sector->lightlevel = 0;
+		P_RemoveThinker(&flash->thinker);
+		return;
+	}
 
-		if (flash->sector->lightlevel == 32) {
-			flash->sector->lightlevel = 0;
-			flash->count = (P_Random() & 7) + 1;
-		}
-		else {
-			flash->sector->lightlevel = 32;
-			flash->count = (P_Random() & 32) + 1;
-		}
+	if (flash->sector->lightlevel == 32) {
+		flash->sector->lightlevel = 0;
+		flash->count = (P_Random() & 7) + 1;
+	}
+	else {
+		flash->sector->lightlevel = 32;
+		flash->count = (P_Random() & 32) + 1;
 	}
 }
 
@@ -123,19 +126,22 @@ void T_LightFlash(lightflash_t* flash) {
 // for specials that spawn thinkers
 //
 void P_SpawnLightFlash(sector_t* sector) {
-	if (v_accessibility.value < 1)
+	lightflash_t* flash;
+
+	flash = Z_Malloc(sizeof(*flash), PU_LEVSPEC, 0);
+
+	P_AddThinker(&flash->thinker);
+
+	if (v_accessibility.value > 0)
 	{
-		lightflash_t* flash;
-
-		flash = Z_Malloc(sizeof(*flash), PU_LEVSPEC, 0);
-
-		P_AddThinker(&flash->thinker);
-
-		flash->thinker.function.acp1 = (actionf_p1)T_LightFlash;
-		flash->sector = sector;
-		flash->special = sector->special;
-		flash->count = (P_Random() & 63) + 1;
+		flash->thinker.function.acp1 = (actionf_p1)T_AccessibilityFakeThinker;
 	}
+	else {
+		flash->thinker.function.acp1 = (actionf_p1)T_LightFlash;
+	}
+	flash->sector = sector;
+	flash->special = sector->special;
+	flash->count = (P_Random() & 63) + 1;
 }
 
 //------------------------------------------------------------------------
@@ -149,29 +155,26 @@ void P_SpawnLightFlash(sector_t* sector) {
 //
 
 void T_StrobeFlash(strobe_t* flash) {
-	if (v_accessibility.value < 1)
+	if (--flash->count)
 	{
-		if (--flash->count)
-		{
-			return;
-		}
+		return;
+	}
 
-		if (flash->sector->special != flash->special)
-		{
-			P_RemoveThinker(&flash->thinker);
-			return;
-		}
+	if (flash->sector->special != flash->special)
+	{
+		P_RemoveThinker(&flash->thinker);
+		return;
+	}
 
-		if (flash->sector->lightlevel == 0)
-		{
-			flash->sector->lightlevel = flash->maxlight;
-			flash->count = flash->brighttime;
-		}
-		else
-		{
-			flash->sector->lightlevel = 0;
-			flash->count = flash->darktime;
-		}
+	if (flash->sector->lightlevel == 0)
+	{
+		flash->sector->lightlevel = flash->maxlight;
+		flash->count = flash->brighttime;
+	}
+	else
+	{
+		flash->sector->lightlevel = 0;
+		flash->count = flash->darktime;
 	}
 }
 
@@ -182,20 +185,25 @@ void T_StrobeFlash(strobe_t* flash) {
 //
 
 void P_SpawnStrobeFlash(sector_t* sector, int speed) {
-	if (v_accessibility.value < 1)
-	{
-		strobe_t* flash;
+	strobe_t* flash;
 
-		flash = Z_Malloc(sizeof(*flash), PU_LEVSPEC, 0);
-		P_AddThinker(&flash->thinker);
-		flash->thinker.function.acp1 = (actionf_p1)T_StrobeFlash;
-		flash->sector = sector;
-		flash->special = sector->special;
-		flash->brighttime = STROBEBRIGHT;
-		flash->maxlight = 16;
-		flash->darktime = speed;
-		flash->count = (P_Random() & 7) + 1;
+	flash = Z_Malloc(sizeof(*flash), PU_LEVSPEC, 0);
+	P_AddThinker(&flash->thinker);
+
+	if (v_accessibility.value > 0)
+	{
+		flash->thinker.function.acp1 = (actionf_p1)T_AccessibilityFakeThinker;
 	}
+	else {
+		flash->thinker.function.acp1 = (actionf_p1)T_StrobeFlash;
+	}
+
+	flash->sector = sector;
+	flash->special = sector->special;
+	flash->brighttime = STROBEBRIGHT;
+	flash->maxlight = 16;
+	flash->darktime = speed;
+	flash->count = (P_Random() & 7) + 1;
 }
 
 //
@@ -204,20 +212,25 @@ void P_SpawnStrobeFlash(sector_t* sector, int speed) {
 //
 
 void P_SpawnStrobeAltFlash(sector_t* sector, int speed) {      // 0x80015C44
-	if (v_accessibility.value < 1)
-	{
-		strobe_t* flash;
+	strobe_t* flash;
 
-		flash = Z_Malloc(sizeof(*flash), PU_LEVSPEC, 0);
-		P_AddThinker(&flash->thinker);
-		flash->thinker.function.acp1 = (actionf_p1)T_StrobeFlash;
-		flash->sector = sector;
-		flash->special = sector->special;
-		flash->brighttime = STROBEBRIGHT2;
-		flash->maxlight = 127;
-		flash->darktime = speed;
-		flash->count = 1;
+	flash = Z_Malloc(sizeof(*flash), PU_LEVSPEC, 0);
+	P_AddThinker(&flash->thinker);
+
+	if (v_accessibility.value > 0)
+	{
+		flash->thinker.function.acp1 = (actionf_p1)T_AccessibilityFakeThinker;
 	}
+	else {
+		flash->thinker.function.acp1 = (actionf_p1)T_StrobeFlash;
+	}
+
+	flash->sector = sector;
+	flash->special = sector->special;
+	flash->brighttime = STROBEBRIGHT2;
+	flash->maxlight = 127;
+	flash->darktime = speed;
+	flash->count = 1;
 }
 
 //
@@ -226,19 +239,16 @@ void P_SpawnStrobeAltFlash(sector_t* sector, int speed) {      // 0x80015C44
 //
 
 void EV_StartLightStrobing(line_t* line) {
-	if (v_accessibility.value < 1)
-	{
-		int            secnum;
-		sector_t* sec;
+	int            secnum;
+	sector_t* sec;
 
-		secnum = -1;
-		while ((secnum = P_FindSectorFromLineTag(line, secnum)) >= 0) {
-			sec = &sectors[secnum];
-			if (sec->specialdata) {
-				continue;
-			}
-			P_SpawnStrobeFlash(sec, SLOWDARK);
+	secnum = -1;
+	while ((secnum = P_FindSectorFromLineTag(line, secnum)) >= 0) {
+		sec = &sectors[secnum];
+		if (sec->specialdata) {
+			continue;
 		}
+		P_SpawnStrobeFlash(sec, SLOWDARK);
 	}
 }
 
@@ -253,47 +263,56 @@ void EV_StartLightStrobing(line_t* line) {
 //
 
 void T_Glow(glow_t* g) {
-	if (v_accessibility.value < 1)
+	if (--g->count) {
+		return;
+	}
+
+	if (g->sector->special != g->special)
 	{
-		if (--g->count) {
-			return;
-		}
+		P_RemoveThinker(&g->thinker);
+		return;
+	}
 
-		if (g->sector->special != g->special)
+	g->count = 2;
+
+	switch (g->direction)
+	{
+	case -1:		/* DOWN */
+		g->sector->lightlevel -= GLOWSPEED;
+		if (g->sector->lightlevel < g->minlight)
 		{
-			P_RemoveThinker(&g->thinker);
-			return;
-		}
+			g->sector->lightlevel = g->minlight;
 
-		g->count = 2;
+			if (g->type == PULSERANDOM)
+				g->maxlight = (P_Random() & 31) + 17;
 
-		switch (g->direction)
-		{
-		case -1:		/* DOWN */
-			g->sector->lightlevel -= GLOWSPEED;
-			if (g->sector->lightlevel < g->minlight)
+			if (v_accessibility.value > 0)
 			{
-				g->sector->lightlevel = g->minlight;
-
-				if (g->type == PULSERANDOM)
-					g->maxlight = (P_Random() & 31) + 17;
-
+				g->direction = 0;
+			}
+			else {
 				g->direction = 1;
 			}
-			break;
-		case 1:			/* UP */
-			g->sector->lightlevel += GLOWSPEED;
-			if (g->maxlight < g->sector->lightlevel)
+		}
+		break;
+	case 1:			/* UP */
+		g->sector->lightlevel += GLOWSPEED;
+		if (g->maxlight < g->sector->lightlevel)
+		{
+			g->sector->lightlevel = g->maxlight;
+
+			if (g->type == PULSERANDOM)
+				g->minlight = (P_Random() & 15);
+
+			if (v_accessibility.value > 0)
 			{
-				g->sector->lightlevel = g->maxlight;
-
-				if (g->type == PULSERANDOM)
-					g->minlight = (P_Random() & 15);
-
+				g->direction = 0;
+			}
+			else {
 				g->direction = -1;
 			}
-			break;
 		}
+		break;
 	}
 }
 
@@ -302,31 +321,36 @@ void T_Glow(glow_t* g) {
 //
 
 void P_SpawnGlowingLight(sector_t* sector, byte type) {
-	if (v_accessibility.value < 1)
+	glow_t* g;
+
+	g = Z_Malloc(sizeof(*g), PU_LEVSPEC, 0);
+
+	P_AddThinker(&g->thinker);
+	g->count = 2;
+	g->direction = 1;
+	g->sector = sector;
+	g->type = type;
+	g->special = sector->special;
+
+	if (v_accessibility.value > 0)
 	{
-		glow_t* g;
-
-		g = Z_Malloc(sizeof(*g), PU_LEVSPEC, 0);
-
-		P_AddThinker(&g->thinker);
-		g->count = 2;
-		g->direction = 1;
-		g->sector = sector;
-		g->type = type;
-		g->special = sector->special;
+		g->thinker.function.acp1 = (actionf_p1)T_AccessibilityFakeThinker;
+	}
+	else {
 		g->thinker.function.acp1 = (actionf_p1)T_Glow;
-		g->minlight = 0;
+	}
 
-		switch (type)
-		{
-		case PULSENORMAL:
-			g->maxlight = 32;
-			break;
-		case PULSESLOW:
-		case PULSERANDOM:
-			g->maxlight = 48;
-			break;
-		}
+	g->minlight = 0;
+
+	switch (type)
+	{
+	case PULSENORMAL:
+		g->maxlight = 32;
+		break;
+	case PULSESLOW:
+	case PULSERANDOM:
+		g->maxlight = 48;
+		break;
 	}
 }
 

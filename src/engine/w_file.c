@@ -189,3 +189,8 @@ int8_t* W_FindIWAD(void)
 {
 	return I_FindDataFile("DOOM64.WAD");
 }
+
+int8_t* W_FindIWADAlpha(void)
+{
+	return I_FindDataFile("DOOM64ALPHA.WAD");
+}
