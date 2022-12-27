@@ -55,7 +55,7 @@
 #include "con_console.h"    // for cvars
 
 // 20120203 villsa - cvar for soundfont location
-CVAR(s_soundfont, doomsnd.sf2);
+CVAR(s_soundfont, doomsndx.sf2);
 
 //
 // Mutex
