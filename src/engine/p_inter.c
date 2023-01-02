@@ -862,6 +862,7 @@ static void P_Obituary(mobj_t* source, mobj_t* target) {
 		case MT_PLAYERBOT1:
 		case MT_PLAYERBOT2:
 		case MT_PLAYERBOT3:
+		case MT_PLAYERBOT4:
 			sprintf(omsg, "you were killed\nby a marine.");
 			break;
 		case MT_CHAINGUY:

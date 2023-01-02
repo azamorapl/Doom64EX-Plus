@@ -1566,6 +1566,7 @@ typedef enum {
 	MT_TESTA0,
 	MT_DOG1,
 	MT_DOG2,
+	MT_PLAYERBOT4,
 	NUMMOBJTYPES
 } mobjtype_t;
 

@@ -6423,5 +6423,31 @@ MF_SOLID,// flags
 		1,		// palette
 		255,		//alpha
 		S_HDOG_RAISE0
+	{
+		/*MT_PLAYERBOT4*/
+		1623,        //doomednum
+		S_PBOT_STND,        //spawnstate
+		100,        //spawnhealth
+		S_PBOT_RUN1,        //seestate
+		sfx_None/*sfx_000*/,        //seesound
+		0,        //reactiontime
+		sfx_None/*sfx_000*/,        //attacksound
+		S_PBOT_PAIN,        //painstate
+		255,        //painchance
+		sfx_plrpain,        //painsound
+		S_NULL,        //meleestate
+		S_PBOT_ATK1,        //missilestate
+		S_PLAY_DIE1,        //deathstate
+		S_PLAY_XDIE1,        //xdeathstate
+		sfx_plrdie,        //deathsound
+		16,        //speed
+		32 * FRACUNIT,        //radius
+		87 * FRACUNIT,        //height
+		100,        //mass
+		0,        //damage
+		sfx_None/*sfx_000*/,        //activesound
+		MF_SOLID | MF_SHOOTABLE | MF_GRAVITY | MF_DROPOFF | MF_COUNTKILL | MF_NOTDMATCH,        //flags
+		3,        //palette
+		255        //alpha
 	}
 };

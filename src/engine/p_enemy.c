@@ -570,7 +570,7 @@ boolean P_LookForPlayers(mobj_t* actor, boolean allaround) {
 
 	if (!actor->target || actor->target->health <= 0 ||
 		!(actor->flags & MF_SEETARGET)) {
-		if (actor->type > MT_PLAYERBOT3) { // for monsters
+		if (actor->type > MT_PLAYERBOT3 && actor->type != MT_PLAYERBOT4) { // for monsters
 			int index = 0;
 
 			// find other players
@@ -605,6 +605,7 @@ boolean P_LookForPlayers(mobj_t* actor, boolean allaround) {
 
 			for (mobj = mobjhead.next; mobj != &mobjhead; mobj = mobj->next) {
 				if (!(mobj->flags & MF_COUNTKILL) || mobj->type <= MT_PLAYERBOT3 ||
+					mobj->type == MT_PLAYERBOT4 ||
 					mobj->health <= 0 || mobj == actor) {
 					continue;
 				}
