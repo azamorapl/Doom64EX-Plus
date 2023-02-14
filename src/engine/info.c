@@ -70,6 +70,7 @@ char* sprnames[NUMSPRITES + 1] = {  //0x5FA30
 	"VFIR",
 	"VILE",
 	"TEST",
+	"HDOG",
 	NULL
 };
 
@@ -160,6 +161,8 @@ void A_VileChase();
 void A_VileStart();
 void A_VileTarget();
 void A_VileAttack();
+void A_DogChase();
+void A_DogCharge();
 
 #pragma warning(push)
 #pragma warning(disable:4113)
@@ -1363,9 +1366,49 @@ state_t states[NUMSTATES] = {      //0x4DFF4
 	/*S_HEAD_RAISE3*/{ SPR_TEST, 9, 8, {NULL}, S_TEST_RAISE2 },
 	/*S_HEAD_RAISE2*/{ SPR_TEST, 8, 8, {A_Scream}, S_TEST_RAISE1 },
 	/*S_HEAD_RAISE1*/{ SPR_TEST, 7, 8, {NULL}, S_TEST_RUN1 },
-	
-	
-	
+
+	/*S_HDOG_STND*/			{ SPR_HDOG, 0, 8, {A_Look}, S_HDOG_STND2 },
+	/*S_HDOG_STND2*/		{ SPR_HDOG, 3, 8, {A_Look}, S_HDOG_STND },
+	/*S_HDOG_RUN1*/			{ SPR_HDOG, 0, 2, {A_DogChase}, S_HDOG_RUN2 },
+	/*S_HDOG_RUN2*/			{ SPR_HDOG, 0, 2, {A_Chase}, S_HDOG_RUN3 },
+	/*S_HDOG_RUN3*/			{ SPR_HDOG, 1, 2, {A_Chase}, S_HDOG_RUN4 },
+	/*S_HDOG_RUN4*/			{ SPR_HDOG, 1, 2, {A_Chase}, S_HDOG_RUN5 },
+	/*S_HDOG_RUN5*/			{ SPR_HDOG, 2, 2, {A_Chase}, S_HDOG_RUN6 },
+	/*S_HDOG_RUN6*/			{ SPR_HDOG, 2, 2, {A_Chase}, S_HDOG_RUN7 },
+	/*S_HDOG_RUN7*/			{ SPR_HDOG, 3, 2, {A_Chase}, S_HDOG_RUN8 },
+	/*S_HDOG_RUN8*/			{ SPR_HDOG, 3, 2, {A_Chase}, S_HDOG_RUN1 },
+	/*S_HDOG_CHRG1*/		{ SPR_HDOG, 0, 0, {A_DogCharge}, S_HDOG_CHRG2 },
+	/*S_HDOG_CHRG2*/		{ SPR_HDOG, 0, 1, {A_Chase}, S_HDOG_CHRG3 },
+	/*S_HDOG_CHRG3*/		{ SPR_HDOG, 0, 1, {A_Chase}, S_HDOG_CHRG4 },
+	/*S_HDOG_CHRG4*/		{ SPR_HDOG, 1, 1, {A_Chase}, S_HDOG_CHRG5 },
+	/*S_HDOG_CHRG5*/		{ SPR_HDOG, 1, 1, {A_Chase}, S_HDOG_CHRG6 },
+	/*S_HDOG_CHRG6*/		{ SPR_HDOG, 2, 1, {A_Chase}, S_HDOG_CHRG7 },
+	/*S_HDOG_CHRG7*/		{ SPR_HDOG, 2, 1, {A_Chase}, S_HDOG_CHRG8 },
+	/*S_HDOG_CHRG8*/		{ SPR_HDOG, 3, 1, {A_Chase}, S_HDOG_CHRG9 },
+	/*S_HDOG_CHRG9*/		{ SPR_HDOG, 3, 1, {A_Chase}, S_HDOG_CHRG2 },
+	/*S_HDOG_ATK1*/			{ SPR_HDOG, 4, 4, {A_SargAttack}, S_HDOG_ATK2 },
+	/*S_HDOG_ATK2*/			{ SPR_HDOG, 5, 4, {A_FaceTarget}, S_HDOG_ATK3 },
+	/*S_HDOG_ATK3*/			{ SPR_HDOG, 6, 4, {A_FaceTarget}, S_HDOG_RUN1 },
+	/*S_HDOG_PAIN1*/		{ SPR_HDOG, 7, 2, {NULL}, S_HDOG_PAIN2 },
+	/*S_HDOG_PAIN2*/		{ SPR_HDOG, 7, 2, {A_Pain}, S_HDOG_RUN1 },
+	/*S_HDOG_DIE1*/			{ SPR_HDOG, 8, 8, {NULL}, S_HDOG_DIE2 },
+	/*S_HDOG_DIE2*/			{ SPR_HDOG, 9, 8, {A_Scream}, S_HDOG_DIE3 },
+	/*S_HDOG_DIE3*/			{ SPR_HDOG, 10, 4, {NULL}, S_HDOG_DIE4 },
+	/*S_HDOG_DIE4*/			{ SPR_HDOG, 11, 4, {A_Fall}, S_HDOG_DIE5 },
+	/*S_HDOG_DIE5*/			{ SPR_HDOG, 12, 4, {A_OnDeathTrigger}, S_HDOG_DIE6 },
+	/*S_HDOG_DIE6*/			{ SPR_HDOG, 13, -1, {NULL}, S_NULL },
+	/*S_HDOG_RUN0*/			{ SPR_HDOG, 0, 1, {A_FadeOut}, S_HDOG_RUN1 },
+	/*S_HDOG_CHRG0*/		{ SPR_HDOG, 0, 1, {A_FadeOut}, S_HDOG_CHRG1 },
+	/*S_HDOG_ATK0*/			{ SPR_HDOG, 4, 1, {A_FadeOut}, S_HDOG_ATK1 },
+	/*S_HDOG_PAIN0*/		{ SPR_HDOG, 7, 1, {A_FadeOut}, S_HDOG_PAIN1 },
+	/*S_HDOG_DIE0*/			{ SPR_HDOG, 8, 1, {A_FadeIn}, S_HDOG_DIE1 },
+	/*S_HDOG_RAISE0*/		{ SPR_HDOG, 13, 1, {A_FadeOut}, S_HDOG_RAISE1 },
+	/*S_HDOG_RAISE1*/		{ SPR_HDOG, 13, 5, {NULL}, S_HDOG_RAISE2 },
+	/*S_HDOG_RAISE2*/		{ SPR_HDOG, 12, 5, {NULL}, S_HDOG_RAISE3 },
+	/*S_HDOG_RAISE3*/		{ SPR_HDOG, 11, 5, {NULL}, S_HDOG_RAISE4 },
+	/*S_HDOG_RAISE4*/		{ SPR_HDOG, 10, 5, {NULL}, S_HDOG_RAISE5 },
+	/*S_HDOG_RAISE5*/		{ SPR_HDOG, 9, 5, {NULL}, S_HDOG_RAISE6 },
+	/*S_HDOG_RAISE6*/		{ SPR_HDOG, 8, 5, {NULL}, S_HDOG_RUN1 },
 };
 
 #pragma warning(pop)
@@ -6324,4 +6367,61 @@ MF_SOLID,// flags
 		255,        //alpha
 		S_TEST_RAISE1        //raisestate
 },
+	{
+		/*MT_DOG1*/
+		1620,		// doomednum
+		S_HDOG_STND,		// spawnstate
+		130,		// spawnhealth
+		S_HDOG_RUN1,		// seestate
+		sfx_dogsit,		// seesound
+		8,		// reactiontime
+		sfx_sargatk,		// attacksound
+		S_HDOG_PAIN1,		// painstate
+		40,		// painchance
+		sfx_dbpain2,		// painsound
+		S_HDOG_ATK1,		// meleestate
+		S_HDOG_CHRG1,		// missilestate
+		S_HDOG_DIE1,		// deathstate
+		S_NULL,		// xdeathstate
+		sfx_dogdth,		// deathsound
+		DOG_SPEED_NORMAL,		// speed
+		46 * FRACUNIT,		// radius
+		78 * FRACUNIT,		// height
+		300,		// mass
+		0,		// damage
+		sfx_dbact,		// activesound
+		MF_SOLID | MF_SHOOTABLE | MF_GRAVITY | MF_COUNTKILL,		// flags
+		0,		// palette
+		255,		//alpha
+		S_HDOG_RAISE1
+	},
+
+	{
+		/*MT_DOG2*/
+		1621,		// doomednum
+		S_HDOG_STND,		// spawnstate
+		130,		// spawnhealth
+		S_HDOG_RUN0,		// seestate
+		sfx_dogsit,		// seesound
+		8,		// reactiontime
+		sfx_sargatk,		// attacksound
+		S_HDOG_PAIN0,		// painstate
+		40,		// painchance
+		sfx_dbpain2,		// painsound
+		S_HDOG_ATK0,		// meleestate
+		S_HDOG_CHRG0,		// missilestate
+		S_HDOG_DIE0,		// deathstate
+		S_NULL,		// xdeathstate
+		sfx_dogdth,		// deathsound
+		DOG_SPEED_NORMAL,		// speed
+		46 * FRACUNIT,		// radius
+		78 * FRACUNIT,		// height
+		300,		// mass
+		0,		// damage
+		sfx_dbact,		// activesound
+		MF_SOLID | MF_SHOOTABLE | MF_GRAVITY | MF_COUNTKILL,		// flags
+		1,		// palette
+		255,		//alpha
+		S_HDOG_RAISE0
+	}
 };

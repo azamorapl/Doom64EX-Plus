@@ -2204,3 +2204,35 @@ void A_VileAttack(mobj_t* actor)
 	fire->y = actor->target->y - FixedMul(24 * FRACUNIT, finesine[an]);
 	P_RadiusAttack(fire, actor, 70);
 }
+
+//
+// A_DogChase
+//
+void A_DogChase(mobj_t* actor)
+{
+	actor->info->speed = DOG_SPEED_NORMAL;
+	A_Chase(actor);
+}
+
+//
+// A_DogCharge
+//
+void A_DogCharge(mobj_t* actor)
+{
+	if (actor->target && !P_CheckSight(actor, actor->target))
+	{
+		actor->state = actor->info->seestate;
+		actor->info->speed = DOG_SPEED_NORMAL;
+		return;
+	}
+	if (P_Random() & 1 || actor->info->speed == DOG_SPEED_CHARGE)
+		return;
+
+	A_FaceTarget(actor);
+	S_StartSound(actor, sfx_dogatk);
+	angle_t an = actor->angle >> ANGLETOFINESHIFT;
+	actor->momx += FixedMul(DOG_SPEED_LEAP * FRACUNIT, finecosine[an]);
+	actor->momy += FixedMul(DOG_SPEED_LEAP * FRACUNIT, finesine[an]);
+	actor->momz = 7 * FRACUNIT;
+	actor->info->speed = DOG_SPEED_CHARGE;
+}

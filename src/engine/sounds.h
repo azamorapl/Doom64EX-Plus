@@ -157,6 +157,9 @@ typedef enum {
 	mus_complete,
 	mus_intro,
 	mus_title,
+	sfx_dogsit,
+	sfx_dogdth,
+	sfx_dogatk,
 	NUMSFX
 } sfxenum_t;
 

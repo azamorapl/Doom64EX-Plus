@@ -876,6 +876,10 @@ static void P_Obituary(mobj_t* source, mobj_t* target) {
 		case MT_VILE:
 			sprintf(omsg, "you were incinerated\nby an Arch-Vile.");
 			break;
+		case MT_DOG1:
+		case MT_DOG2:
+			sprintf(omsg, "you were mauled\nby an Hell Hound.");
+			break;
 		default:
 			sprintf(omsg, "you died.");
 			break;
